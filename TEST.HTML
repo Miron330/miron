@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אתר מובייל</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            direction: rtl;
+        }
+        .page {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background-size: cover; /* Ensures image covers screen proportionally */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat;
+        }
+        .page.active {
+            display: block;
+            z-index: 10;
+        }
+        .gif-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gif-container img {
+            max-width: 100%;
+            height: auto; /* Maintains proportions */
+        }
+        .buttons {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 20;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+        .buttons button:disabled {
+            background-color: #bbb;
+            cursor: not-allowed;
+        }
+        .final-page {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            background-color: #f9f9f9;
+            color: #333;
+            font-size: 1.5em;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .final-page.active {
+            display: flex;
+        }
+        .final-page p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pages -->
+    <div class="page active" id="page1" style="background-image: url('Image0.JPEG');"></div>
+    <div class="page" id="page2" style="background-image: url('Image1.png');"></div>
+    <div class="page" id="page2" style="background-image: url('Image1.png');"></div>
+    <div class="page" id="page3">
+        <div class="gif-container">
+            <img src="gif 3.gif" alt="GIF">
+        </div>
+    </div>
+    <div class="page" id="page4" style="background-image: url('Image4.png');"></div>
+    <div class="page" id="page5" style="background-image: url('Image5.png');"></div>
+    <div class="page final-page" id="page6">
+        <p>וזהו.. נגמר..</p>
+        <p>מקווה שנהנת!</p>
+        <p>עכשיו אפשר להמשיך להסתובב או לקנות מה שבא לך.</p>
+        <p>ואז חוזרים לקטנטנים שמחכים בבית ולארוחת ערב עם המשפחה שלך.</p>
+        <p>אני אוהב אותך! ❤️</p>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="buttons">
+        <button id="prevBtn" onclick="changePage(-1)" disabled>אחורה</button>
+        <button id="nextBtn" onclick="changePage(1)">קדימה</button>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 6;
+
+        function changePage(direction) {
+            // Hide current page
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+
+            // Update current page index
+            currentPage += direction;
+
+            // Show new page
+            document.getElementById(`page${currentPage}`).classList.add('active');
+
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+
+            // Show text only on page 6
+            const finalPage = document.querySelector('.final-page');
+            if (currentPage === 6) {
+                finalPage.style.display = 'flex'; // Show the text
+            } else {
+                finalPage.style.display = 'none'; // Hide the text
+            }
+        }
+    </script>
+
+</body>
+</html>
